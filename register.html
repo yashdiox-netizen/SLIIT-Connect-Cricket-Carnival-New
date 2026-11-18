@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register Your Team — SLIIT Connect Cricket Carnival</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B164A;
+    --ink-soft:#55557A;
+    --white:#FFFFFF;
+    --paper:#F5F5FA;
+    --paper-dim:#ECECF5;
+    --pitch:#E47408;
+    --pitch-dark:#B25805;
+    --pitch-light:#FDEEDC;
+    --leather:#C0392B;
+    --leather-light:#FBEAE8;
+    --seam:#D5D3E6;
+    --line:#E1E1EE;
+    --shadow: 0 12px 32px -12px rgba(27,22,74,0.18);
+    --shadow-sm: 0 4px 14px -6px rgba(27,22,74,0.15);
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    letter-spacing:0.5px;
+    line-height:1.05;
+    text-transform:uppercase;
+  }
+  .mono{ font-family:'JetBrains Mono',monospace; }
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none; margin:0; padding:0;}
+
+
+  .logo img{ height:38px; width:auto; display:block; }
+  .logo .brand-sep{ width:1px; height:24px; background:var(--line); }
+  .event-meta{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:10px;
+    margin:18px auto 0;
+  }
+  .event-pill{
+    display:inline-flex; align-items:center; gap:7px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px; font-weight:600;
+    padding:8px 14px; border-radius:999px;
+    background:#fff; border:1px solid var(--line); color:var(--ink);
+  }
+  a.event-pill:hover{ border-color:var(--pitch); color:var(--pitch-dark); }
+
+  /* ===== TOP BAR ===== */
+  .topbar{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    max-width:760px;
+    margin:0 auto;
+    padding:16px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-family:'Anton',sans-serif;
+    font-size:17px;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+  }
+  .logo .dot{
+    width:10px;height:10px;border-radius:50%;
+    background:var(--pitch);
+    box-shadow:0 0 0 4px var(--pitch-light);
+  }
+  .back-link{
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--ink-soft);
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .back-link:hover{ color:var(--pitch-dark); }
+
+  /* ===== PAGE HEADER ===== */
+  .page-head{
+    max-width:760px;
+    margin:0 auto;
+    padding:44px 20px 8px;
+    text-align:center;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:var(--pitch-dark);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow::before{ content:""; width:16px; height:2px; background:var(--pitch); display:inline-block; }
+  .page-head h1{
+    font-size:clamp(30px, 6vw, 42px);
+    margin:14px 0 10px;
+  }
+  .page-head p{
+    font-size:15.5px;
+    color:var(--ink-soft);
+    max-width:480px;
+    margin:0 auto;
+    line-height:1.6;
+  }
+
+  /* ===== STEPPER ===== */
+  .stepper{
+    max-width:760px;
+    margin:34px auto 0;
+    padding:0 20px;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+  }
+  .step-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    flex:1;
+    position:relative;
+  }
+  .step-item .circle{
+    width:36px;height:36px;
+    border-radius:50%;
+    background:#fff;
+    border:2px solid var(--line);
+    color:var(--ink-soft);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    font-size:13px;
+    margin-bottom:8px;
+    transition:all .2s ease;
+    z-index:2;
+  }
+  .step-item .step-label{
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--ink-soft);
+    letter-spacing:0.3px;
+  }
+  .step-item::before{
+    content:"";
+    position:absolute;
+    top:18px;
+    left:-50%;
+    width:100%;
+    height:2px;
+    background:var(--line);
+    z-index:1;
+  }
+  .step-item:first-child::before{ display:none; }
+  .step-item.active .circle{
+    background:var(--pitch);
+    border-color:var(--pitch);
+    color:#fff;
+    box-shadow:0 0 0 5px var(--pitch-light);
+  }
+  .step-item.active .step-label{ color:var(--ink); }
+  .step-item.done .circle{
+    background:var(--pitch-dark);
+    border-color:var(--pitch-dark);
+    color:#fff;
+  }
+  .step-item.done::before, .step-item.done ~ .step-item::before{ background:var(--pitch); }
+  .step-item.done .step-label{ color:var(--ink); }
+
+  /* ===== FORM WRAP ===== */
+  .form-wrap{
+    max-width:760px;
+    margin:34px auto 90px;
+    padding:0 20px;
+  }
+  .card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:32px;
+  }
+  .step-panel{ display:none; }
+  .step-panel.visible{ display:block; }
+
+  .fieldset-title{
+    font-family:'Inter',sans-serif;
+    text-transform:none;
+    letter-spacing:0;
+    font-size:18px;
+    font-weight:800;
+    margin:0 0 4px;
+  }
+  .fieldset-sub{
+    font-size:14px;
+    color:var(--ink-soft);
+    margin:0 0 24px;
+  }
+
+  .field{ margin-bottom:18px; }
+  .field label{
+    display:block;
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--ink);
+    margin-bottom:7px;
+  }
+  .field label .opt{
+    font-weight:500;
+    color:var(--ink-soft);
+    text-transform:none;
+    font-size:12.5px;
+  }
+  .req-star{ color:var(--leather); margin-left:2px; }
+
+  .field input,
+  .field select{
+    width:100%;
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    padding:13px 15px;
+    border-radius:var(--radius-sm);
+    border:1.5px solid var(--line);
+    background:var(--paper);
+    color:var(--ink);
+    transition:border-color .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .field input::placeholder{ color:#9C9CB8; }
+  .field input:focus,
+  .field select:focus{
+    outline:none;
+    border-color:var(--pitch);
+    background:#fff;
+    box-shadow:0 0 0 4px var(--pitch-light);
+  }
+  .field input:invalid:not(:placeholder-shown):not(:focus).touched,
+  .field.field-error input,
+  .field.field-error select{
+    border-color:var(--leather);
+    background:var(--leather-light);
+  }
+  .field-error-msg{
+    display:none;
+    font-size:12.5px;
+    color:var(--leather);
+    margin-top:6px;
+    font-weight:600;
+  }
+  .field.field-error .field-error-msg{ display:block; }
+
+  .submit-banner{
+    display:none;
+    align-items:flex-start;
+    gap:10px;
+    padding:14px 16px;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:18px;
+    line-height:1.5;
+  }
+  .submit-banner.visible{ display:flex; }
+  .submit-banner.error{
+    background:var(--leather-light);
+    color:var(--leather);
+    border:1px solid rgba(176,58,46,0.25);
+  }
+  .submit-banner.info{
+    background:var(--pitch-light);
+    color:var(--pitch-dark);
+    border:1px solid rgba(228,116,8,0.25);
+  }
+  .btn-spinner{
+    display:inline-block;
+    width:14px;
+    height:14px;
+    border:2px solid rgba(255,255,255,0.5);
+    border-top-color:#fff;
+    border-radius:50%;
+    margin-right:8px;
+    vertical-align:-2px;
+    animation:spin 0.7s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0 16px;
+  }
+
+  select{ appearance:none; -webkit-appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234B5A50' stroke-width='1.6' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 15px center;
+  }
+
+  .field select.captain-select,
+  .field select.captain-select:focus{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234B5A50' stroke-width='1.6' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 15px center;
+    padding-right:40px;
+    cursor:pointer;
+  }
+
+  /* ===== PLAYER CARDS ===== */
+  .players-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  .player-card{
+    border:1.5px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px;
+    background:var(--paper);
+    transition:border-color .15s ease;
+  }
+  .player-card:has(.field-error){ border-color:rgba(176,58,46,0.4); }
+  .player-card-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:16px;
+  }
+  .player-num{
+    width:30px;height:30px;
+    border-radius:9px;
+    background:var(--pitch-light);
+    color:var(--pitch-dark);
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    font-size:12.5px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .player-card-head h4{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--ink);
+    margin:0;
+    font-weight:700;
+  }
+  .player-card .field{ margin-bottom:12px; }
+  .player-card .field:last-child{ margin-bottom:0; }
+  .player-card .field label{ font-size:12.5px; margin-bottom:5px; }
+  .player-card .field input,
+  .player-card .field select{
+    padding:10px 12px;
+    font-size:14px;
+    background:#fff;
+  }
+  .player-card .field select,
+  .player-card .field select:focus{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234B5A50' stroke-width='1.6' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+    padding-right:34px;
+    cursor:pointer;
+  }
+
+  /* ===== SUMMARY (STEP 3) ===== */
+  .req-summary{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:12px;
+    margin-bottom:26px;
+  }
+  .req-chip{
+    border:1px solid var(--line);
+    border-radius:var(--radius-sm);
+    padding:16px 14px;
+    background:var(--paper);
+  }
+  .req-chip .req-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    font-weight:700;
+    color:var(--pitch);
+    letter-spacing:1px;
+    display:block;
+    margin-bottom:8px;
+  }
+  .req-chip h5{
+    font-size:14px;
+    font-weight:700;
+    margin:0 0 4px;
+  }
+  .req-chip p{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    line-height:1.5;
+    margin:0;
+  }
+
+  .review-block{
+    border:1px dashed var(--seam);
+    background:var(--paper);
+    border-radius:var(--radius-sm);
+    padding:18px 20px;
+    margin-bottom:24px;
+  }
+  .review-block h5{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 10px;
+  }
+  .review-row{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    font-size:13.5px;
+    padding:6px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .review-row:last-child{ border-bottom:none; }
+  .review-row span:first-child{ color:var(--ink-soft); }
+  .review-row span:last-child{ font-weight:700; text-align:right; }
+
+  .confirm-box{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:18px;
+    border-radius:var(--radius-sm);
+    background:var(--pitch-light);
+    border:1px solid rgba(228,116,8,0.25);
+    margin-bottom:8px;
+  }
+  .confirm-box input[type="checkbox"]{
+    width:19px;height:19px;
+    margin-top:2px;
+    accent-color:var(--pitch);
+    flex-shrink:0;
+    cursor:pointer;
+  }
+  .confirm-box label{
+    font-size:14px;
+    line-height:1.55;
+    color:var(--ink);
+    font-weight:600;
+    cursor:pointer;
+  }
+  .confirm-box.field-error{
+    background:var(--leather-light);
+    border-color:rgba(176,58,46,0.35);
+  }
+
+  /* ===== NAV BUTTONS ===== */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    padding:15px 28px;
+    border-radius:999px;
+    cursor:pointer;
+    border:none;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background:var(--pitch);
+    color:#fff;
+    box-shadow:0 10px 24px -8px rgba(228,116,8,0.55);
+  }
+  .btn-primary:hover{ background:var(--pitch-dark); transform:translateY(-2px); }
+  .btn-primary:disabled{ opacity:0.6; cursor:not-allowed; transform:none; }
+  .btn-outline-dark{
+    background:transparent;
+    color:var(--ink);
+    border:1.5px solid var(--line);
+  }
+  .btn-outline-dark:hover{ border-color:var(--pitch); color:var(--pitch-dark); }
+
+  .step-nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:28px;
+  }
+  .step-nav .spacer{ flex:1; }
+
+  /* ===== SUCCESS ===== */
+  .success-panel{ display:none; text-align:center; padding:20px 6px; }
+  .success-panel.visible{ display:block; }
+  .success-icon{
+    width:64px;height:64px;
+    border-radius:50%;
+    background:var(--pitch-light);
+    color:var(--pitch-dark);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 20px;
+  }
+  .success-panel h2{ font-size:26px; margin:0 0 10px; }
+  .success-panel p{ font-size:15px; color:var(--ink-soft); line-height:1.6; max-width:420px; margin:0 auto 24px; }
+  .success-ref{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    background:var(--paper);
+    border:1px dashed var(--seam);
+    border-radius:12px;
+    padding:12px 18px;
+    display:inline-block;
+    margin-bottom:24px;
+    color:var(--ink-soft);
+  }
+  .success-ref strong{ color:var(--ink); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:640px){
+    .card{ padding:22px 18px; border-radius:16px; }
+    .grid-2{ grid-template-columns:1fr; }
+    .players-grid{ grid-template-columns:1fr; }
+    .req-summary{ grid-template-columns:1fr; }
+    .step-item .step-label{ font-size:11px; }
+    .page-head{ padding:32px 20px 4px; }
+    .step-nav .btn{ padding:14px 20px; font-size:14px; }
+    .review-row{ font-size:12.5px; }
+  }
+  @media (max-width:400px){
+    .step-item .step-label{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="logo"><img src="sliit-logo.png" alt="SLIIT"><span class="brand-sep"></span>SLIIT Connect Cricket Carnival</div>
+    <a href="index.html" class="back-link">&larr; Back to Home</a>
+  </div>
+</div>
+
+<div class="page-head">
+  <span class="eyebrow">Team Registration</span>
+  <h1>Register Your Team</h1>
+  <p>Three quick steps to lock in your squad's spot in the SLIIT Connect Cricket Carnival. Have your players' details ready before you start.</p>
+  <div class="event-meta">
+    <span class="event-pill">Saturday, 12 December 2026</span>
+    <a href="https://maps.app.goo.gl/k9JYkLcpcaxcvxjQ7?g_st=ic" target="_blank" rel="noopener" class="event-pill">Angampitiya Play Ground &#8599;</a>
+  </div>
+</div>
+
+<div class="stepper" id="stepper">
+  <div class="step-item active" data-step="1">
+    <div class="circle">01</div>
+    <span class="step-label">Team Details</span>
+  </div>
+  <div class="step-item" data-step="2">
+    <div class="circle">02</div>
+    <span class="step-label">Players</span>
+  </div>
+  <div class="step-item" data-step="3">
+    <div class="circle">03</div>
+    <span class="step-label">Confirmation</span>
+  </div>
+</div>
+
+<div class="form-wrap">
+  <div class="card">
+
+    <form id="regForm" novalidate>
+
+      <!-- ============ STEP 1 ============ -->
+      <div class="step-panel visible" data-panel="1">
+        <h3 class="fieldset-title">Team Details</h3>
+        <p class="fieldset-sub">Tell us who's leading the squad and how to reach you.</p>
+
+        <div class="field" data-field="teamName">
+          <label>Team Name<span class="req-star">*</span></label>
+          <input type="text" name="teamName" placeholder="e.g. Engineering Eagles" required>
+          <div class="field-error-msg">Please enter your team name.</div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field" data-field="captainName">
+            <label>Team Captain Name<span class="req-star">*</span></label>
+            <input type="text" name="captainName" placeholder="Full name" required>
+            <div class="field-error-msg">Please enter the captain's name.</div>
+          </div>
+          <div class="field" data-field="captainContact">
+            <label>Captain's Contact Number<span class="req-star">*</span></label>
+            <input type="tel" name="captainContact" placeholder="07X XXX XXXX" required>
+            <div class="field-error-msg">Please enter a valid contact number.</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field" data-field="captainEmail">
+            <label>Captain's Email <span class="opt">(optional)</span></label>
+            <input type="email" name="captainEmail" placeholder="you@university.edu">
+            <div class="field-error-msg">Please enter a valid email address.</div>
+          </div>
+          <div class="field" data-field="captainGender">
+            <label>Gender<span class="req-star">*</span></label>
+            <select name="captainGender" class="captain-select" required>
+              <option value="" disabled selected>Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <div class="field-error-msg">Please select a gender.</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field" data-field="intake">
+            <label>Intake<span class="req-star">*</span></label>
+            <select name="intake" class="captain-select" required>
+              <option value="" disabled selected>Select intake</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            <div class="field-error-msg">Please select your intake.</div>
+          </div>
+          <div class="field" data-field="pathway">
+            <label>Pathway<span class="req-star">*</span></label>
+            <input type="text" name="pathway" placeholder="Type your pathway" required>
+            <div class="field-error-msg">Please enter your pathway.</div>
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <div class="spacer"></div>
+          <button type="button" class="btn btn-primary" data-next="2">Next: Player Details &rarr;</button>
+        </div>
+      </div>
+
+      <!-- ============ STEP 2 ============ -->
+      <div class="step-panel" data-panel="2">
+        <h3 class="fieldset-title">Player Details</h3>
+        <p class="fieldset-sub">Every team must register exactly 8 players, including at least 1 girl. Fill in all fields for each player.</p>
+
+        <div class="players-grid" id="playersGrid"></div>
+
+        <div class="submit-banner error" id="genderRuleBanner" style="display:none; margin-top:18px;">Every team must include at least 1 girl. Please set the gender to Female for at least one player.</div>
+
+        <div class="step-nav">
+          <button type="button" class="btn btn-outline-dark" data-back="1">&larr; Back</button>
+          <div class="spacer"></div>
+          <button type="button" class="btn btn-primary" data-next="3">Next: Confirmation &rarr;</button>
+        </div>
+      </div>
+
+      <!-- ============ STEP 3 ============ -->
+      <div class="step-panel" data-panel="3">
+        <h3 class="fieldset-title">Requirements &amp; Confirmation</h3>
+        <p class="fieldset-sub">Have these ready — verification will be quicker and your slot confirmed sooner.</p>
+
+        <div class="req-summary">
+          <div class="req-chip">
+            <span class="req-num">REQUIRED</span>
+            <h5>SIF / NB Details</h5>
+            <p>Signed Student Indemnity Form or No-Objection declaration for every player.</p>
+          </div>
+          <div class="req-chip">
+            <span class="req-num">REQUIRED</span>
+            <h5>Student ID</h5>
+            <p>A clear copy of each player's current university student ID card.</p>
+          </div>
+          <div class="req-chip">
+            <span class="req-num">GOOD TO HAVE</span>
+            <h5>Other Information</h5>
+            <p>A recent passport-size photo per player may be requested for the roster.</p>
+          </div>
+        </div>
+
+        <div class="review-block">
+          <h5>Registration Summary</h5>
+          <div id="reviewList"></div>
+        </div>
+
+        <div class="confirm-box" data-field="confirmCheck">
+          <input type="checkbox" id="confirmCheck" name="confirmCheck" required>
+          <label for="confirmCheck">I confirm that the information provided is accurate and that all registered players are eligible to participate.</label>
+        </div>
+        <div class="field-error-msg" id="confirmErrorMsg" style="display:none; margin-bottom:18px;">Please confirm before submitting.</div>
+
+        <div class="submit-banner error" id="submitErrorBanner"></div>
+
+        <div class="step-nav">
+          <button type="button" class="btn btn-outline-dark" data-back="2">&larr; Back</button>
+          <div class="spacer"></div>
+          <button type="submit" class="btn btn-primary" id="submitBtn">Submit Team Registration</button>
+        </div>
+      </div>
+
+    </form>
+
+    <!-- ============ SUCCESS ============ -->
+    <div class="success-panel" id="successPanel">
+      <div class="success-icon">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h2>Team Registered!</h2>
+      <p>Thanks, <span id="successCaptain">Captain</span> — <strong id="successTeam">your team</strong> is in. Our organizers will reach out on <span id="successContact">your contact number</span> once verification is complete.</p>
+      <div class="success-ref">Reference: <strong id="successRef">USC-000000</strong></div>
+      <div>
+        <a href="index.html" class="btn btn-primary">Back to Home</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  // ============================================================
+  // GOOGLE APPS SCRIPT ENDPOINT — CONFIGURE THIS
+  // Deploy the accompanying Code.gs as a Web App in Google Apps
+  // Script (Deploy > New deployment > Web app > Execute as: Me,
+  // Who has access: Anyone), then paste the deployment URL below.
+  // ============================================================
+  const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzacBmJ2f_0Z_1UgCZBFIrElrv42jwxS39UoAOy_UZ6alL4xJScThPfiCjBvq5EDYGm/exec";
+
+  const totalPlayers = 8;
+  const playersGrid = document.getElementById('playersGrid');
+  const stepItems = document.querySelectorAll('.step-item');
+  const panels = document.querySelectorAll('.step-panel');
+  const form = document.getElementById('regForm');
+  const successPanel = document.getElementById('successPanel');
+
+  // ---- Build 8 player cards ----
+  let playersHTML = '';
+  for(let i=1;i<=totalPlayers;i++){
+    const n = String(i).padStart(2,'0');
+    playersHTML += `
+      <div class="player-card" data-player="${i}">
+        <div class="player-card-head">
+          <div class="player-num">${n}</div>
+          <h4>Player ${n}</h4>
+        </div>
+        <div class="field" data-field="p${i}_name">
+          <label>Full Name<span class="req-star">*</span></label>
+          <input type="text" name="p${i}_name" placeholder="Full name" required>
+          <div class="field-error-msg">Required.</div>
+        </div>
+        <div class="field" data-field="p${i}_sid">
+          <label>Student ID / SIF / NB<span class="req-star">*</span></label>
+          <input type="text" name="p${i}_sid" placeholder="e.g. 2021/CS/045" required>
+          <div class="field-error-msg">Required.</div>
+        </div>
+        <div class="field" data-field="p${i}_contact">
+          <label>Contact Number<span class="req-star">*</span></label>
+          <input type="tel" name="p${i}_contact" placeholder="07X XXX XXXX" required>
+          <div class="field-error-msg">Required.</div>
+        </div>
+        <div class="field" data-field="p${i}_gender">
+          <label>Gender<span class="req-star">*</span></label>
+          <select name="p${i}_gender" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <div class="field-error-msg">Required.</div>
+        </div>
+        <div class="field" data-field="p${i}_intake">
+          <label>Intake<span class="req-star">*</span></label>
+          <select name="p${i}_intake" required>
+            <option value="" disabled selected>Select intake</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <div class="field-error-msg">Required.</div>
+        </div>
+        <div class="field" data-field="p${i}_pathway">
+          <label>Pathway<span class="req-star">*</span></label>
+          <input type="text" name="p${i}_pathway" placeholder="Type your pathway" required>
+          <div class="field-error-msg">Required.</div>
+        </div>
+      </div>`;
+  }
+  playersGrid.innerHTML = playersHTML;
+
+  // ---- At least 1 girl per team ----
+  function teamHasGirl(){
+    for(let i=1;i<=totalPlayers;i++){
+      const sel = form.querySelector('[name="p'+i+'_gender"]');
+      if(sel && sel.value === 'Female') return true;
+    }
+    return false;
+  }
+  function showGenderRule(show){
+    const b = document.getElementById('genderRuleBanner');
+    b.style.display = show ? 'block' : 'none';
+    if(show) b.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+  playersGrid.addEventListener('change', () => { if(teamHasGirl()) showGenderRule(false); });
+
+  // ---- Step navigation ----
+  function goToStep(stepNum){
+    panels.forEach(p => p.classList.toggle('visible', p.dataset.panel === String(stepNum)));
+    stepItems.forEach(item => {
+      const s = parseInt(item.dataset.step);
+      item.classList.remove('active','done');
+      if(s === stepNum) item.classList.add('active');
+      else if(s < stepNum) item.classList.add('done');
+    });
+    document.querySelector('.form-wrap').scrollIntoView({behavior:'smooth', block:'start'});
+    if(stepNum === 3) buildReview();
+  }
+
+  function clearError(fieldEl){
+    fieldEl.classList.remove('field-error');
+  }
+  function setError(fieldEl){
+    fieldEl.classList.add('field-error');
+  }
+
+  function validateFieldsIn(panel){
+    let valid = true;
+    const fields = panel.querySelectorAll('[data-field]');
+    fields.forEach(fieldEl => {
+      const input = fieldEl.querySelector('input, select');
+      if(!input) return;
+      if(input.hasAttribute('required')){
+        let ok = true;
+        if(input.type === 'checkbox'){
+          ok = input.checked;
+        } else {
+          ok = input.value.trim() !== '' && input.checkValidity();
+        }
+        if(!ok){ setError(fieldEl); valid = false; }
+        else{ clearError(fieldEl); }
+      } else if(input.value.trim() !== '' && !input.checkValidity()){
+        setError(fieldEl); valid = false;
+      } else {
+        clearError(fieldEl);
+      }
+    });
+    return valid;
+  }
+
+  document.querySelectorAll('[data-next]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const currentPanel = btn.closest('.step-panel');
+      if(validateFieldsIn(currentPanel)){
+        if(currentPanel.dataset.panel === '2' && !teamHasGirl()){
+          showGenderRule(true);
+          return;
+        }
+        goToStep(parseInt(btn.dataset.next));
+      } else {
+        const firstError = currentPanel.querySelector('.field-error');
+        if(firstError) firstError.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+    });
+  });
+
+  document.querySelectorAll('[data-back]').forEach(btn => {
+    btn.addEventListener('click', () => goToStep(parseInt(btn.dataset.back)));
+  });
+
+  // ---- Review summary on step 3 ----
+  function buildReview(){
+    const data = new FormData(form);
+    const teamName = data.get('teamName') || '—';
+    const captainName = data.get('captainName') || '—';
+    const captainContact = data.get('captainContact') || '—';
+    const captainEmail = data.get('captainEmail') || '—';
+    const captainGender = data.get('captainGender') || '—';
+    const intake = data.get('intake') || '—';
+    const pathway = (data.get('pathway') || '').trim() || '—';
+
+    let playersDone = 0;
+    for(let i=1;i<=totalPlayers;i++){
+      if((data.get('p'+i+'_name')||'').trim() !== '') playersDone++;
+    }
+
+    const reviewList = document.getElementById('reviewList');
+    reviewList.innerHTML = `
+      <div class="review-row"><span>Team Name</span><span>${escapeHTML(teamName)}</span></div>
+      <div class="review-row"><span>Captain</span><span>${escapeHTML(captainName)}</span></div>
+      <div class="review-row"><span>Captain Contact</span><span>${escapeHTML(captainContact)}</span></div>
+      <div class="review-row"><span>Captain Email</span><span>${escapeHTML(captainEmail)}</span></div>
+      <div class="review-row"><span>Gender</span><span>${escapeHTML(captainGender)}</span></div>
+      <div class="review-row"><span>Intake</span><span>${escapeHTML(intake)}</span></div>
+      <div class="review-row"><span>Pathway</span><span>${escapeHTML(pathway)}</span></div>
+      <div class="review-row"><span>Players Registered</span><span>${playersDone} / ${totalPlayers}</span></div>
+    `;
+  }
+  function escapeHTML(str){
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  // ---- Confirmation checkbox error ----
+  const confirmField = document.querySelector('[data-field="confirmCheck"]');
+  const confirmInput = document.getElementById('confirmCheck');
+  const confirmErrorMsg = document.getElementById('confirmErrorMsg');
+  confirmInput.addEventListener('change', () => {
+    if(confirmInput.checked){
+      confirmField.classList.remove('field-error');
+      confirmErrorMsg.style.display = 'none';
+    }
+  });
+
+  // ---- Build the payload sent to Google Apps Script ----
+  function buildPayload(){
+    const data = new FormData(form);
+    const payload = {
+      teamName: (data.get('teamName') || '').trim(),
+      captainName: (data.get('captainName') || '').trim(),
+      captainContact: (data.get('captainContact') || '').trim(),
+      captainEmail: (data.get('captainEmail') || '').trim(),
+      captainGender: (data.get('captainGender') || '').trim(),
+      intake: (data.get('intake') || '').trim(),
+      pathway: (data.get('pathway') || '').trim(),
+      facultyGroup: ('Intake ' + (data.get('intake') || '') + ' - ' + (data.get('pathway') || '')).trim(),
+      players: []
+    };
+    for(let i=1;i<=totalPlayers;i++){
+      payload.players.push({
+        name: (data.get('p'+i+'_name') || '').trim(),
+        id: (data.get('p'+i+'_sid') || '').trim(),
+        contact: (data.get('p'+i+'_contact') || '').trim(),
+        gender: (data.get('p'+i+'_gender') || '').trim(),
+        intake: (data.get('p'+i+'_intake') || '').trim(),
+        pathway: (data.get('p'+i+'_pathway') || '').trim()
+      });
+    }
+    return payload;
+  }
+
+  function showSubmitError(message){
+    const banner = document.getElementById('submitErrorBanner');
+    banner.textContent = message;
+    banner.classList.add('visible');
+  }
+  function hideSubmitError(){
+    const banner = document.getElementById('submitErrorBanner');
+    banner.classList.remove('visible');
+    banner.textContent = '';
+  }
+  function setSubmitting(isSubmitting){
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = isSubmitting;
+    submitBtn.innerHTML = isSubmitting
+      ? '<span class="btn-spinner"></span>Submitting…'
+      : 'Submit Team Registration';
+  }
+
+  // ---- Submit ----
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    hideSubmitError();
+
+    if(!teamHasGirl()){
+      goToStep(2);
+      showGenderRule(true);
+      return;
+    }
+
+    const step3Panel = document.querySelector('[data-panel="3"]');
+    let valid = validateFieldsIn(step3Panel);
+
+    if(!confirmInput.checked){
+      confirmField.classList.add('field-error');
+      confirmErrorMsg.style.display = 'block';
+      valid = false;
+    } else {
+      confirmField.classList.remove('field-error');
+      confirmErrorMsg.style.display = 'none';
+    }
+
+    if(!valid){
+      const firstError = step3Panel.querySelector('.field-error');
+      if(firstError) firstError.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+
+    // Guard: endpoint not configured yet
+    if(!GOOGLE_APPS_SCRIPT_URL || GOOGLE_APPS_SCRIPT_URL.indexOf('PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') !== -1){
+      showSubmitError('Registration submission is not connected yet — the Google Apps Script Web App URL has not been configured (GOOGLE_APPS_SCRIPT_URL). Please contact the site admin.');
+      return;
+    }
+
+    const payload = buildPayload();
+    const data = new FormData(form);
+
+    setSubmitting(true);
+
+    fetch(GOOGLE_APPS_SCRIPT_URL, {
+      method: 'POST',
+      // text/plain avoids a CORS preflight request against the Apps Script endpoint
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    })
+      .then(function(res){ return res.json(); })
+      .then(function(result){
+        setSubmitting(false);
+
+        if(!result || result.status !== 'success'){
+          showSubmitError((result && result.message) || 'Something went wrong while saving your registration. Please try again.');
+          return;
+        }
+
+        document.getElementById('successCaptain').textContent = data.get('captainName') || 'Captain';
+        document.getElementById('successTeam').textContent = data.get('teamName') || 'Your team';
+        document.getElementById('successContact').textContent = data.get('captainContact') || 'your contact number';
+        document.getElementById('successRef').textContent = result.registrationId || '—';
+
+        form.style.display = 'none';
+        document.getElementById('stepper').style.display = 'none';
+        successPanel.classList.add('visible');
+      })
+      .catch(function(err){
+        setSubmitting(false);
+        showSubmitError('Could not reach the registration server. Please check your connection and try again.');
+        console.error('Registration submit error:', err);
+      });
+  });
+
+  goToStep(1);
+})();
+</script>
+
+</body>
+</html>
