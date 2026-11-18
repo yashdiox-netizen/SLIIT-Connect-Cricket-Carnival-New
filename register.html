@@ -603,7 +603,7 @@
       <!-- ============ STEP 1 ============ -->
       <div class="step-panel visible" data-panel="1">
         <h3 class="fieldset-title">Team Details</h3>
-        <p class="fieldset-sub">Tell us who's leading the squad and how to reach you.</p>
+        <p class="fieldset-sub">Tell us who's leading the squad and how to reach you. The captain counts as Player 01 of your 8.</p>
 
         <div class="field" data-field="teamName">
           <label>Team Name<span class="req-star">*</span></label>
@@ -671,11 +671,11 @@
       <!-- ============ STEP 2 ============ -->
       <div class="step-panel" data-panel="2">
         <h3 class="fieldset-title">Player Details</h3>
-        <p class="fieldset-sub">Every team must register exactly 8 players, including at least 1 girl. Fill in all fields for each player.</p>
+        <p class="fieldset-sub">Your team has 8 players including the captain (Player 01). Add the other 7 players below. The team must include at least 1 girl.</p>
 
         <div class="players-grid" id="playersGrid"></div>
 
-        <div class="submit-banner error" id="genderRuleBanner" style="display:none; margin-top:18px;">Every team must include at least 1 girl. Please set the gender to Female for at least one player.</div>
+        <div class="submit-banner error" id="genderRuleBanner" style="display:none; margin-top:18px;">Every team must include at least 1 girl (the captain counts). Please set the gender to Female for at least one player.</div>
 
         <div class="step-nav">
           <button type="button" class="btn btn-outline-dark" data-back="1">&larr; Back</button>
@@ -753,19 +753,19 @@
   // Script (Deploy > New deployment > Web app > Execute as: Me,
   // Who has access: Anyone), then paste the deployment URL below.
   // ============================================================
-  const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzacBmJ2f_0Z_1UgCZBFIrElrv42jwxS39UoAOy_UZ6alL4xJScThPfiCjBvq5EDYGm/exec";
+  const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxRTQWovXQiljcfzs1vMY2qMASO2m4xSAuz4IXz1bDXdUWa-5ukQHdasfm8UN7qJHA/exec";
 
-  const totalPlayers = 8;
+  const totalPlayers = 7; // other players; captain is Player 01, so team = 8
   const playersGrid = document.getElementById('playersGrid');
   const stepItems = document.querySelectorAll('.step-item');
   const panels = document.querySelectorAll('.step-panel');
   const form = document.getElementById('regForm');
   const successPanel = document.getElementById('successPanel');
 
-  // ---- Build 8 player cards ----
+  // ---- Build 7 player cards (Player 02 to 08) ----
   let playersHTML = '';
   for(let i=1;i<=totalPlayers;i++){
-    const n = String(i).padStart(2,'0');
+    const n = String(i+1).padStart(2,'0');
     playersHTML += `
       <div class="player-card" data-player="${i}">
         <div class="player-card-head">
@@ -778,7 +778,7 @@
           <div class="field-error-msg">Required.</div>
         </div>
         <div class="field" data-field="p${i}_sid">
-          <label>Student ID / SIF / NB<span class="req-star">*</span></label>
+          <label>Student ID / SIF <span class="req-star">*</span></label>
           <input type="text" name="p${i}_sid" placeholder="e.g. 2021/CS/045" required>
           <div class="field-error-msg">Required.</div>
         </div>
@@ -820,6 +820,8 @@
 
   // ---- At least 1 girl per team ----
   function teamHasGirl(){
+    const cap = form.querySelector('[name="captainGender"]');
+    if(cap && cap.value === 'Female') return true;
     for(let i=1;i<=totalPlayers;i++){
       const sel = form.querySelector('[name="p'+i+'_gender"]');
       if(sel && sel.value === 'Female') return true;
@@ -831,7 +833,7 @@
     b.style.display = show ? 'block' : 'none';
     if(show) b.scrollIntoView({behavior:'smooth', block:'center'});
   }
-  playersGrid.addEventListener('change', () => { if(teamHasGirl()) showGenderRule(false); });
+  form.addEventListener('change', () => { if(teamHasGirl()) showGenderRule(false); });
 
   // ---- Step navigation ----
   function goToStep(stepNum){
@@ -922,7 +924,7 @@
       <div class="review-row"><span>Gender</span><span>${escapeHTML(captainGender)}</span></div>
       <div class="review-row"><span>Intake</span><span>${escapeHTML(intake)}</span></div>
       <div class="review-row"><span>Pathway</span><span>${escapeHTML(pathway)}</span></div>
-      <div class="review-row"><span>Players Registered</span><span>${playersDone} / ${totalPlayers}</span></div>
+      <div class="review-row"><span>Team Size (incl. captain)</span><span>${playersDone + 1} / ${totalPlayers + 1}</span></div>
     `;
   }
   function escapeHTML(str){
@@ -983,7 +985,7 @@
     const submitBtn = document.getElementById('submitBtn');
     submitBtn.disabled = isSubmitting;
     submitBtn.innerHTML = isSubmitting
-      ? '<span class="btn-spinner"></span>Submitting…'
+      ? '<span class="btn-spinner"></span>Submitting… please wait'
       : 'Submit Team Registration';
   }
 
@@ -1027,14 +1029,20 @@
 
     setSubmitting(true);
 
+    // Give up after 45s so the button never hangs forever
+    const controller = new AbortController();
+    const timeoutId = setTimeout(function(){ controller.abort(); }, 45000);
+
     fetch(GOOGLE_APPS_SCRIPT_URL, {
       method: 'POST',
+      signal: controller.signal,
       // text/plain avoids a CORS preflight request against the Apps Script endpoint
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
     })
       .then(function(res){ return res.json(); })
       .then(function(result){
+        clearTimeout(timeoutId);
         setSubmitting(false);
 
         if(!result || result.status !== 'success'){
@@ -1052,8 +1060,11 @@
         successPanel.classList.add('visible');
       })
       .catch(function(err){
+        clearTimeout(timeoutId);
         setSubmitting(false);
-        showSubmitError('Could not reach the registration server. Please check your connection and try again.');
+        showSubmitError(err && err.name === 'AbortError'
+          ? 'The server is taking too long to respond. Your registration may have been saved — please contact the organizers before submitting again.'
+          : 'Could not reach the registration server. Please check your connection and try again.');
         console.error('Registration submit error:', err);
       });
   });
