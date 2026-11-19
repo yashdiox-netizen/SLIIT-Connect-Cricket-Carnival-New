@@ -671,11 +671,9 @@
       <!-- ============ STEP 2 ============ -->
       <div class="step-panel" data-panel="2">
         <h3 class="fieldset-title">Player Details</h3>
-        <p class="fieldset-sub">Your team has 8 players including the captain (Player 01). Add the other 7 players below. The team must include at least 1 girl.</p>
+        <p class="fieldset-sub">Your team has 8 players including the captain (Player 01). Add the other 7 players below.</p>
 
         <div class="players-grid" id="playersGrid"></div>
-
-        <div class="submit-banner error" id="genderRuleBanner" style="display:none; margin-top:18px;">Every team must include at least 1 girl (the captain counts). Please set the gender to Female for at least one player.</div>
 
         <div class="step-nav">
           <button type="button" class="btn btn-outline-dark" data-back="1">&larr; Back</button>
@@ -818,23 +816,6 @@
   }
   playersGrid.innerHTML = playersHTML;
 
-  // ---- At least 1 girl per team ----
-  function teamHasGirl(){
-    const cap = form.querySelector('[name="captainGender"]');
-    if(cap && cap.value === 'Female') return true;
-    for(let i=1;i<=totalPlayers;i++){
-      const sel = form.querySelector('[name="p'+i+'_gender"]');
-      if(sel && sel.value === 'Female') return true;
-    }
-    return false;
-  }
-  function showGenderRule(show){
-    const b = document.getElementById('genderRuleBanner');
-    b.style.display = show ? 'block' : 'none';
-    if(show) b.scrollIntoView({behavior:'smooth', block:'center'});
-  }
-  form.addEventListener('change', () => { if(teamHasGirl()) showGenderRule(false); });
-
   // ---- Step navigation ----
   function goToStep(stepNum){
     panels.forEach(p => p.classList.toggle('visible', p.dataset.panel === String(stepNum)));
@@ -883,10 +864,6 @@
     btn.addEventListener('click', () => {
       const currentPanel = btn.closest('.step-panel');
       if(validateFieldsIn(currentPanel)){
-        if(currentPanel.dataset.panel === '2' && !teamHasGirl()){
-          showGenderRule(true);
-          return;
-        }
         goToStep(parseInt(btn.dataset.next));
       } else {
         const firstError = currentPanel.querySelector('.field-error');
@@ -993,12 +970,6 @@
   form.addEventListener('submit', function(e){
     e.preventDefault();
     hideSubmitError();
-
-    if(!teamHasGirl()){
-      goToStep(2);
-      showGenderRule(true);
-      return;
-    }
 
     const step3Panel = document.querySelector('[data-panel="3"]');
     let valid = validateFieldsIn(step3Panel);
